@@ -1,107 +1,155 @@
 // Store user data
-let currentUser = null;
+let currentUser = JSON.parse(sessionStorage.getItem('currentUser')) || null;
 
-// Page Navigation
+// ================================
+// MODAL FUNCTIONS
+// ================================
+function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+}
+
+function switchModal(fromModalId, toModalId) {
+    closeModal(fromModalId);
+    setTimeout(() => {
+        openModal(toModalId);
+    }, 200);
+}
+
+// Close modal on Escape key
+document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+        const activeModal = document.querySelector('.modal.active');
+        if (activeModal) {
+            closeModal(activeModal.id);
+        }
+    }
+});
+
+// ================================
+// PAGE NAVIGATION
+// ================================
 function showPage(pageId) {
-    // Hide all pages
     const pages = document.querySelectorAll('.page');
     pages.forEach(page => page.classList.remove('active'));
-    
-    // Show selected page
+
     const selectedPage = document.getElementById(pageId);
     if (selectedPage) {
         selectedPage.classList.add('active');
     }
 }
 
-// Handle Login
+// ================================
+// AUTHENTICATION HANDLERS
+// ================================
 function handleLogin(event) {
     event.preventDefault();
-    
+
     const name = document.getElementById('login-name').value;
     const studentId = document.getElementById('login-student-id').value;
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
-    
-    // Store user data (in real app, validate against database)
+
+    // Store user data
     currentUser = {
         name: name,
         studentId: studentId,
         email: email
     };
-    
-    // Update user name in dashboard
-    document.getElementById('user-name').textContent = name;
-    document.getElementById('dashboard-user-name').textContent = name;
-    
-    // Show dashboard
-    showPage('dashboard-page');
-    
-    // Show success message
+
+    // Save to sessionStorage
+    sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+    // Close modal
+    closeModal('login-modal');
+
+    // Update dashboard user name
+    const userNameEl = document.getElementById('user-name');
+    const dashboardUserNameEl = document.getElementById('dashboard-user-name');
+    if (userNameEl) userNameEl.textContent = name;
+    if (dashboardUserNameEl) dashboardUserNameEl.textContent = name;
+
+    // Show success and redirect to dashboard
     alert('Login successful! Welcome to ICCT HUB');
+    showPage('dashboard-page');
 }
 
-// Handle Registration
 function handleRegister(event) {
     event.preventDefault();
-    
+
     const name = document.getElementById('register-name').value;
     const studentId = document.getElementById('register-student-id').value;
     const email = document.getElementById('register-email').value;
     const password = document.getElementById('register-password').value;
     const confirmPassword = document.getElementById('register-confirm-password').value;
     const termsAccepted = document.getElementById('terms').checked;
-    
+
     // Validation
     if (password !== confirmPassword) {
         alert('Passwords do not match!');
         return;
     }
-    
+
     if (!termsAccepted) {
         alert('Please agree to the terms of service and privacy policy');
         return;
     }
-    
-    // Store user data (in real app, send to database)
+
+    // Store user data
     currentUser = {
         name: name,
         studentId: studentId,
         email: email
     };
-    
+
     // Show success message
     alert('Registration successful! Please login to continue.');
-    
-    // Redirect to login page
-    showPage('login-page');
+
+    // Switch to login modal
+    switchModal('register-modal', 'login-modal');
 }
 
-// Dashboard Section Navigation
+// ================================
+// DASHBOARD SECTION NAVIGATION
+// ================================
 function showDashboardSection(sectionId) {
     // Hide all content sections
     const sections = document.querySelectorAll('.content-section');
     sections.forEach(section => section.classList.remove('active'));
-    
+
     // Show selected section
     const selectedSection = document.getElementById(sectionId + '-section');
     if (selectedSection) {
         selectedSection.classList.add('active');
     }
-    
+
     // Update active nav item
     const navItems = document.querySelectorAll('.sidebar-nav .nav-item');
     navItems.forEach(item => item.classList.remove('active'));
-    
-    event.target.classList.add('active');
+
+    if (event && event.target) {
+        event.target.closest('.nav-item').classList.add('active');
+    }
 }
 
-// Email Functions
+// ================================
+// EMAIL FUNCTIONS
+// ================================
 function openEmail(emailId) {
     const emailViewer = document.getElementById('email-viewer');
     emailViewer.style.display = 'block';
-    
-    // Hide inbox container
+
     const inboxContainer = document.querySelector('.inbox-container');
     inboxContainer.style.display = 'none';
 }
@@ -109,96 +157,113 @@ function openEmail(emailId) {
 function closeEmail() {
     const emailViewer = document.getElementById('email-viewer');
     emailViewer.style.display = 'none';
-    
-    // Show inbox container
+
     const inboxContainer = document.querySelector('.inbox-container');
     inboxContainer.style.display = 'block';
 }
 
-// Lost and Found Tab Switching
+// ================================
+// LOST AND FOUND TAB SWITCHING
+// ================================
 function switchTab(tabName) {
-    // Update active tab
     const tabs = document.querySelectorAll('.tab');
     tabs.forEach(tab => tab.classList.remove('active'));
-    
-    event.target.classList.add('active');
-    
-    // Filter items based on tab (in real app, filter data)
+
+    if (event && event.target) {
+        event.target.classList.add('active');
+    }
+
     console.log('Switched to tab:', tabName);
 }
 
-// Logout Function
+// ================================
+// LOGOUT FUNCTION
+// ================================
 function handleLogout() {
     if (confirm('Are you sure you want to logout?')) {
         currentUser = null;
-        
-        // Clear form fields
-        document.getElementById('login-name').value = '';
-        document.getElementById('login-student-id').value = '';
-        document.getElementById('login-email').value = '';
-        document.getElementById('login-password').value = '';
-        
-        // Go back to landing page
+        sessionStorage.removeItem('currentUser');
+
         showPage('landing-page');
-        
         alert('You have been logged out successfully');
     }
 }
 
-// Search functionality
-document.addEventListener('DOMContentLoaded', function() {
+// ================================
+// SEARCH FUNCTIONALITY
+// ================================
+document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.querySelector('.search-bar input');
     if (searchInput) {
-        searchInput.addEventListener('input', function(e) {
+        searchInput.addEventListener('input', function (e) {
             const searchTerm = e.target.value.toLowerCase();
             console.log('Searching for:', searchTerm);
-            // In real app, implement search functionality
         });
     }
-    
-    // Add click event to nav items
-    const navItems = document.querySelectorAll('.sidebar-nav .nav-item');
-    navItems.forEach(item => {
-        item.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Remove active class from all items
-            navItems.forEach(i => i.classList.remove('active'));
-            
-            // Add active class to clicked item
-            this.classList.add('active');
+
+    // Add button functionality
+    const addButton = document.querySelector('.btn-add');
+    if (addButton) {
+        addButton.addEventListener('click', function () {
+            const activeSection = document.querySelector('.content-section.active');
+
+            if (activeSection) {
+                if (activeSection.id === 'inbox-section') {
+                    alert('Compose new message');
+                } else if (activeSection.id === 'lost-found-section') {
+                    alert('Report lost or found item');
+                } else if (activeSection.id === 'announcements-section') {
+                    alert('Create new announcement (Admin only)');
+                } else {
+                    alert('Add new item');
+                }
+            }
+        });
+    }
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href !== '#' && document.querySelector(href)) {
+                e.preventDefault();
+                document.querySelector(href).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
         });
     });
 });
 
-// Add button functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const addButton = document.querySelector('.btn-add');
-    if (addButton) {
-        addButton.addEventListener('click', function() {
-            // Check which section is active
-            const activeSection = document.querySelector('.content-section.active');
-            
-            if (activeSection.id === 'inbox-section') {
-                alert('Compose new message');
-            } else if (activeSection.id === 'lost-found-section') {
-                alert('Report lost or found item');
-            } else if (activeSection.id === 'announcements-section') {
-                alert('Create new announcement (Admin only)');
-            } else {
-                alert('Add new item');
-            }
-        });
+// ================================
+// INITIALIZATION
+// ================================
+window.addEventListener('load', function () {
+    // Only run on pages with landing-page
+    const landingPage = document.getElementById('landing-page');
+    if (!landingPage) return;
+
+    // Check URL params for dashboard redirect
+    const urlParams = new URLSearchParams(window.location.search);
+    const showDashboard = urlParams.get('dashboard');
+
+    // Check session storage
+    currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+
+    if (showDashboard === 'true' && currentUser) {
+        const userNameEl = document.getElementById('user-name');
+        const dashboardUserNameEl = document.getElementById('dashboard-user-name');
+        if (userNameEl) userNameEl.textContent = currentUser.name;
+        if (dashboardUserNameEl) dashboardUserNameEl.textContent = currentUser.name;
+
+        showPage('dashboard-page');
+    } else {
+        showPage('landing-page');
     }
 });
 
-// Initialize - Show landing page by default
-window.addEventListener('load', function() {
-    showPage('landing-page');
-});
-
 // Handle browser back button
-window.addEventListener('popstate', function(event) {
+window.addEventListener('popstate', function (event) {
     if (currentUser) {
         showPage('dashboard-page');
     } else {
