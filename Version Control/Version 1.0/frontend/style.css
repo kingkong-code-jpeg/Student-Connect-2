@@ -752,7 +752,7 @@ body {
 
 .sidebar {
     width: 260px;
-    background: var(--primary);
+    background: var(--white);
     color: var(--white);
     padding: 25px 20px;
     display: flex;
@@ -778,6 +778,7 @@ body {
 .sidebar-title {
     font-size: 20px;
     font-weight: 600;
+    color: var(--primary);
 }
 
 .sidebar-nav {
@@ -792,7 +793,7 @@ body {
     align-items: center;
     gap: 12px;
     padding: 12px 15px;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--accent);
     text-decoration: none;
     border-radius: 10px;
     transition: all 0.3s;
