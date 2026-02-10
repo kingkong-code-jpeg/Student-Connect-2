@@ -2,6 +2,16 @@
 let currentUser = JSON.parse(sessionStorage.getItem('currentUser')) || null;
 
 // ================================
+// LUCIDE ICONS INITIALIZATION
+// ================================
+document.addEventListener('DOMContentLoaded', function () {
+    // Initialize Lucide icons
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+});
+
+// ================================
 // MODAL FUNCTIONS
 // ================================
 function openModal(modalId) {
@@ -34,6 +44,8 @@ document.addEventListener('keydown', function (e) {
         if (activeModal) {
             closeModal(activeModal.id);
         }
+        // Also close mobile sidebar on Escape
+        closeMobileSidebar();
     }
 });
 
@@ -48,6 +60,66 @@ function showPage(pageId) {
     if (selectedPage) {
         selectedPage.classList.add('active');
     }
+
+    // Re-initialize icons when switching pages
+    setTimeout(() => {
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    }, 50);
+}
+
+// ================================
+// SIDEBAR TOGGLE (Desktop Collapse)
+// ================================
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    if (!sidebar) return;
+
+    sidebar.classList.toggle('collapsed');
+
+    // Update toggle icon
+    const toggleIcon = document.getElementById('sidebar-toggle-icon');
+    if (toggleIcon) {
+        if (sidebar.classList.contains('collapsed')) {
+            toggleIcon.setAttribute('data-lucide', 'chevrons-right');
+        } else {
+            toggleIcon.setAttribute('data-lucide', 'chevrons-left');
+        }
+        // Re-render icons
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    }
+}
+
+// ================================
+// MOBILE SIDEBAR (Hamburger Menu)
+// ================================
+function toggleMobileSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.querySelector('.sidebar-overlay');
+    if (!sidebar) return;
+
+    const isOpen = sidebar.classList.contains('mobile-open');
+
+    if (isOpen) {
+        closeMobileSidebar();
+    } else {
+        sidebar.classList.add('mobile-open');
+        if (overlay) overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeMobileSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.querySelector('.sidebar-overlay');
+    if (!sidebar) return;
+
+    sidebar.classList.remove('mobile-open');
+    if (overlay) overlay.classList.remove('active');
+    document.body.style.overflow = 'auto';
 }
 
 // ================================
@@ -140,6 +212,11 @@ function showDashboardSection(sectionId) {
 
     if (event && event.target) {
         event.target.closest('.nav-item').classList.add('active');
+    }
+
+    // Close mobile sidebar after navigation
+    if (window.innerWidth <= 768) {
+        closeMobileSidebar();
     }
 }
 
@@ -239,6 +316,11 @@ document.addEventListener('DOMContentLoaded', function () {
 // INITIALIZATION
 // ================================
 window.addEventListener('load', function () {
+    // Initialize Lucide icons
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+
     // Only run on pages with landing-page
     const landingPage = document.getElementById('landing-page');
     if (!landingPage) return;
@@ -268,5 +350,12 @@ window.addEventListener('popstate', function (event) {
         showPage('dashboard-page');
     } else {
         showPage('landing-page');
+    }
+});
+
+// Handle window resize - reset mobile sidebar state
+window.addEventListener('resize', function () {
+    if (window.innerWidth > 768) {
+        closeMobileSidebar();
     }
 });

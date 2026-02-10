@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
 <body>
@@ -67,7 +68,8 @@
                         <div class="event-details">
                             <h3>Enrollment Period Opens</h3>
                             <p>Second Semester 2026 enrollment begins for all students.</p>
-                            <span class="event-time">📍 Registrar Office</span>
+                            <span class="event-time"><i data-lucide="map-pin" class="inline-icon"></i> Registrar
+                                Office</span>
                             <button class="btn-event">View Details</button>
                         </div>
                     </div>
@@ -84,7 +86,8 @@
                         <div class="event-details">
                             <h3>Foundation Day Celebration</h3>
                             <p>Join us for the annual ICCT Foundation Day activities and programs.</p>
-                            <span class="event-time">📍 Main Campus Grounds</span>
+                            <span class="event-time"><i data-lucide="map-pin" class="inline-icon"></i> Main Campus
+                                Grounds</span>
                             <button class="btn-event">View Details</button>
                         </div>
                     </div>
@@ -101,7 +104,8 @@
                         <div class="event-details">
                             <h3>Career Fair 2026</h3>
                             <p>Meet potential employers and explore career opportunities.</p>
-                            <span class="event-time">📍 Student Activity Center</span>
+                            <span class="event-time"><i data-lucide="map-pin" class="inline-icon"></i> Student Activity
+                                Center</span>
                             <button class="btn-event">View Details</button>
                         </div>
                     </div>
@@ -114,22 +118,22 @@
             <h2 class="section-title">What We Offer</h2>
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">📢</div>
+                    <div class="feature-icon"><i data-lucide="megaphone"></i></div>
                     <h3>Announcements</h3>
                     <p>Stay informed with real-time updates from your school administration and faculty.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">📧</div>
+                    <div class="feature-icon"><i data-lucide="mail"></i></div>
                     <h3>Student Inbox</h3>
                     <p>Communicate directly with teachers and classmates through our secure messaging system.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🔍</div>
+                    <div class="feature-icon"><i data-lucide="search"></i></div>
                     <h3>Lost & Found</h3>
                     <p>Report and find lost items within the campus community easily.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">📅</div>
+                    <div class="feature-icon"><i data-lucide="calendar-days"></i></div>
                     <h3>Events Calendar</h3>
                     <p>Never miss school events, deadlines, and important academic dates.</p>
                 </div>
@@ -146,10 +150,10 @@
                     students, faculty, and administration, creating a connected campus community.
                 </p>
                 <ul class="about-list">
-                    <li>✓ Easy access to academic resources</li>
-                    <li>✓ Real-time notifications and updates</li>
-                    <li>✓ Secure and user-friendly interface</li>
-                    <li>✓ 24/7 accessibility from any device</li>
+                    <li><i data-lucide="check" class="inline-icon"></i> Easy access to academic resources</li>
+                    <li><i data-lucide="check" class="inline-icon"></i> Real-time notifications and updates</li>
+                    <li><i data-lucide="check" class="inline-icon"></i> Secure and user-friendly interface</li>
+                    <li><i data-lucide="check" class="inline-icon"></i> 24/7 accessibility from any device</li>
                 </ul>
             </div>
         </section>
@@ -160,11 +164,11 @@
             <div class="contact-wrapper">
                 <div class="contact-info">
                     <div class="contact-item">
-                        <span class="contact-icon">📍</span>
+                        <span class="contact-icon"><i data-lucide="map-pin"></i></span>
                         <p>ICCT Colleges - Antipolo Campus</p>
                     </div>
                     <div class="contact-item">
-                        <span class="contact-icon">📞</span>
+                        <span class="contact-icon"><i data-lucide="phone"></i></span>
                         <p>+63 123 456 7890</p>
                     </div>
                 </div>
@@ -186,7 +190,7 @@
     <!-- Login Modal -->
     <div id="login-modal" class="modal">
         <div class="modal-overlay" onclick="closeModal('login-modal')"></div>
-        <div class="modal-content">
+        <div class="modal-content modal-compact">
             <button class="modal-close" onclick="closeModal('login-modal')">&times;</button>
             <div class="modal-header">
                 <img src="Assets/Logo.png" alt="ICCT HUB" class="modal-logo">
@@ -223,7 +227,7 @@
     <!-- Register Modal -->
     <div id="register-modal" class="modal">
         <div class="modal-overlay" onclick="closeModal('register-modal')"></div>
-        <div class="modal-content">
+        <div class="modal-content modal-compact">
             <button class="modal-close" onclick="closeModal('register-modal')">&times;</button>
             <div class="modal-header">
                 <img src="Assets/Logo.png" alt="ICCT HUB" class="modal-logo">
@@ -266,126 +270,170 @@
 
     <!-- Dashboard Page -->
     <div id="dashboard-page" class="page">
-        <div class="sidebar">
+        <!-- Mobile Sidebar Overlay -->
+        <div class="sidebar-overlay" onclick="toggleMobileSidebar()"></div>
+
+        <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <img src="Assets/Logo.png" alt="ICCT HUB" class="sidebar-logo">
                 <h1 class="sidebar-title">ICCT HUB</h1>
+                <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar" id="sidebar-toggle-btn">
+                    <i data-lucide="chevrons-left" id="sidebar-toggle-icon"></i>
+                </button>
             </div>
             <nav class="sidebar-nav">
                 <a href="#" onclick="showDashboardSection('dashboard'); return false;" class="nav-item active">
-                    <span class="nav-icon">📊</span> Dashboard
+                    <span class="nav-icon"><i data-lucide="layout-dashboard"></i></span>
+                    <span class="nav-label">Dashboard</span>
                 </a>
                 <a href="#" onclick="showDashboardSection('inbox'); return false;" class="nav-item">
-                    <span class="nav-icon">📧</span> Inbox
+                    <span class="nav-icon"><i data-lucide="mail"></i></span>
+                    <span class="nav-label">Inbox</span>
                 </a>
                 <a href="#" onclick="showDashboardSection('lost-found'); return false;" class="nav-item">
-                    <span class="nav-icon">🔍</span> Lost and Found
+                    <span class="nav-icon"><i data-lucide="search"></i></span>
+                    <span class="nav-label">Lost and Found</span>
                 </a>
                 <a href="#" onclick="showDashboardSection('announcements'); return false;" class="nav-item">
-                    <span class="nav-icon">📢</span> Announcements
+                    <span class="nav-icon"><i data-lucide="megaphone"></i></span>
+                    <span class="nav-label">Announcements</span>
                 </a>
             </nav>
             <div class="sidebar-footer">
                 <a href="#" class="nav-item">
-                    <span class="nav-icon">❓</span> FAQs
+                    <span class="nav-icon"><i data-lucide="help-circle"></i></span>
+                    <span class="nav-label">FAQs</span>
                 </a>
                 <a href="#" onclick="handleLogout(); return false;" class="nav-item">
-                    <span class="nav-icon">🚪</span> Log Out
+                    <span class="nav-icon"><i data-lucide="log-out"></i></span>
+                    <span class="nav-label">Log Out</span>
                 </a>
             </div>
         </div>
 
         <div class="main-content">
             <div class="top-bar">
+                <button class="hamburger-btn" onclick="toggleMobileSidebar()" title="Open menu">
+                    <i data-lucide="menu"></i>
+                </button>
                 <div class="search-bar">
                     <input type="text" placeholder="Search...">
-                    <button class="search-btn">🔍</button>
+                    <button class="search-btn"><i data-lucide="search"></i></button>
                 </div>
                 <div class="user-info">
                     <span>Hi, <span id="user-name">Student</span></span>
                 </div>
-                <button class="btn-add">+</button>
+                <button class="btn-add"><i data-lucide="plus"></i></button>
             </div>
 
             <!-- Dashboard Section -->
             <div id="dashboard-section" class="content-section active">
-                <div class="welcome-card">
-                    <h2>Hello, <span id="dashboard-user-name">[Student Name]</span>!</h2>
-                    <p class="welcome-text">Get ready for an exciting day!</p>
-                    <p class="event-info">
-                        Don't miss our upcoming event: <strong>[Event Name]</strong>.
-                        Check out the schedule, location, and activities in your portal.
-                    </p>
-                    <p>Join your classmates, participate in fun activities, and make the most of this experience!</p>
-                    <p class="see-you">See you there!</p>
-                    <p class="admin-signature">Admin</p>
+                <div class="content-card">
+                    <div class="card-header">
+                        <i data-lucide="home" class="card-header-icon"></i>
+                        <h3>Welcome</h3>
+                    </div>
+                    <div class="card-body">
+                        <h2 class="welcome-heading">Hello, <span id="dashboard-user-name">[Student Name]</span>!</h2>
+                        <p class="welcome-text">Get ready for an exciting day!</p>
+                        <p class="event-info">
+                            Don't miss our upcoming event: <strong>[Event Name]</strong>.
+                            Check out the schedule, location, and activities in your portal.
+                        </p>
+                        <p>Join your classmates, participate in fun activities, and make the most of this experience!
+                        </p>
+                        <p class="see-you">See you there!</p>
+                        <p class="admin-signature">Admin</p>
+                    </div>
                 </div>
             </div>
 
             <!-- Inbox Section -->
             <div id="inbox-section" class="content-section">
-                <h2 class="section-title">Inbox</h2>
-                <div class="inbox-container">
-                    <div class="email-item" onclick="openEmail(1)">
-                        <div class="email-preview">
-                            <strong>From: carlfrancisco32@gmail.com</strong>
-                            <p>Hi, Karla I read your concern about your missing item...</p>
+                <div class="content-card">
+                    <div class="card-header">
+                        <i data-lucide="mail" class="card-header-icon"></i>
+                        <h3>Inbox</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="inbox-container">
+                            <div class="email-item" onclick="openEmail(1)">
+                                <div class="email-preview">
+                                    <strong>From: carlfrancisco32@gmail.com</strong>
+                                    <p>Hi, Karla I read your concern about your missing item...</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div id="email-viewer" class="email-viewer" style="display: none;">
-                    <div class="email-header">
-                        <strong>To: carlfrancisco32@gmail.com</strong>
-                        <button onclick="closeEmail()" class="btn-close">×</button>
-                    </div>
-                    <div class="email-body">
-                        <p>Hi, Karla I read your concern about your missing item.</p>
-                    </div>
-                    <div class="email-actions">
-                        <button class="btn-action">Reply</button>
-                        <button class="btn-action btn-delete">Delete</button>
+                        <div id="email-viewer" class="email-viewer" style="display: none;">
+                            <div class="email-header">
+                                <strong>To: carlfrancisco32@gmail.com</strong>
+                                <button onclick="closeEmail()" class="btn-close">&times;</button>
+                            </div>
+                            <div class="email-body">
+                                <p>Hi, Karla I read your concern about your missing item.</p>
+                            </div>
+                            <div class="email-actions">
+                                <button class="btn-action">Reply</button>
+                                <button class="btn-action btn-delete">Delete</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Lost and Found Section -->
             <div id="lost-found-section" class="content-section">
-                <h2 class="section-title">Lost and Found</h2>
-                <div class="tabs">
-                    <button class="tab active" onclick="switchTab('all')">All</button>
-                    <button class="tab" onclick="switchTab('pending')">Pendings</button>
-                    <button class="tab" onclick="switchTab('founded')">Founded</button>
-                </div>
-                <div class="lost-found-items">
-                    <div class="lf-item lost-item">
-                        <div class="lf-badge">Lost Item</div>
-                        <p><strong>From: carlfrancisco32@gmail.com</strong></p>
-                        <p>Hi, meron po bang naka kita ng cellphone po na ito pwede po pa message nalang po ako thank
-                            you.</p>
+                <div class="content-card">
+                    <div class="card-header">
+                        <i data-lucide="search" class="card-header-icon"></i>
+                        <h3>Lost and Found</h3>
                     </div>
-                    <div class="lf-item found-item">
-                        <div class="lf-badge found">Found Item</div>
-                        <p><strong>To: carlfrancisco32@gmail.com</strong></p>
-                        <p>HI, meron po akong nakitang I'd sa tapat ng school paki kuha nalang po sakin. Salamat</p>
+                    <div class="card-body">
+                        <div class="tabs">
+                            <button class="tab active" onclick="switchTab('all')">All</button>
+                            <button class="tab" onclick="switchTab('pending')">Pendings</button>
+                            <button class="tab" onclick="switchTab('founded')">Founded</button>
+                        </div>
+                        <div class="lost-found-items">
+                            <div class="lf-item lost-item">
+                                <div class="lf-badge">Lost Item</div>
+                                <p><strong>From: carlfrancisco32@gmail.com</strong></p>
+                                <p>Hi, meron po bang naka kita ng cellphone po na ito pwede po pa message nalang po ako
+                                    thank you.</p>
+                            </div>
+                            <div class="lf-item found-item">
+                                <div class="lf-badge found">Found Item</div>
+                                <p><strong>To: carlfrancisco32@gmail.com</strong></p>
+                                <p>HI, meron po akong nakitang I'd sa tapat ng school paki kuha nalang po sakin. Salamat
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Announcements Section -->
             <div id="announcements-section" class="content-section">
-                <h2 class="section-title">Announcements</h2>
-                <div class="announcement-card">
-                    <h3>Good day, Students!</h3>
-                    <p>
-                        Please be informed that <strong>[insert announcement details here]</strong>.
-                        All students are expected to take note of this announcement and comply accordingly.
-                    </p>
-                    <p>
-                        For questions or clarifications, please contact <strong>[office/person]</strong>
-                        or visit <strong>[location/platform]</strong>.
-                    </p>
-                    <p>Thank you for your cooperation.</p>
-                    <p class="admin-signature">Admin</p>
+                <div class="content-card">
+                    <div class="card-header">
+                        <i data-lucide="megaphone" class="card-header-icon"></i>
+                        <h3>Announcements</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="announcement-card">
+                            <h3>Good day, Students!</h3>
+                            <p>
+                                Please be informed that <strong>[insert announcement details here]</strong>.
+                                All students are expected to take note of this announcement and comply accordingly.
+                            </p>
+                            <p>
+                                For questions or clarifications, please contact <strong>[office/person]</strong>
+                                or visit <strong>[location/platform]</strong>.
+                            </p>
+                            <p>Thank you for your cooperation.</p>
+                            <p class="admin-signature">Admin</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
