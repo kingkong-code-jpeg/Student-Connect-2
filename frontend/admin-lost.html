@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lost Items Management — ICCT HUB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>if(localStorage.getItem('darkMode')==='true')document.documentElement.classList.add('dark-mode');</script>
+</head>
+
+<body class="dashboard-layout" data-page="admin-lost">
+
+    <div class="sidebar-overlay" onclick="closeMobileSidebar()"></div>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="Assets/Logo.png" alt="ICCT HUB" class="sidebar-logo">
+            <h1 class="sidebar-title">ICCT HUB</h1>
+            <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar">
+                <i data-lucide="chevrons-left" id="sidebar-toggle-icon"></i>
+            </button>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-group-label">MAIN</div>
+            <a href="dashboard.html" class="nav-item" data-section="dashboard"><span class="nav-icon"><i
+                        data-lucide="layout-dashboard"></i></span><span class="nav-label">Dashboard</span></a>
+            <a href="inbox.html" class="nav-item" data-section="inbox"><span class="nav-icon"><i
+                        data-lucide="mail"></i></span><span class="nav-label">Inbox</span></a>
+            <a href="lost-found.html" class="nav-item" data-section="lost-found"><span class="nav-icon"><i
+                        data-lucide="search"></i></span><span class="nav-label">Lost & Found</span></a>
+            <a href="announcements.html" class="nav-item" data-section="announcements"><span class="nav-icon"><i
+                        data-lucide="megaphone"></i></span><span class="nav-label">Announcements</span></a>
+            <div class="nav-group-label">ACCOUNT</div>
+            <a href="profile.html" class="nav-item" data-section="profile"><span class="nav-icon"><i
+                        data-lucide="user"></i></span><span class="nav-label">Profile</span></a>
+            <a href="settings.html" class="nav-item" data-section="settings"><span class="nav-icon"><i
+                        data-lucide="settings"></i></span><span class="nav-label">Settings</span></a>
+            <div id="admin-nav" class="admin-nav-group">
+                <div class="nav-group-label">ADMIN</div>
+                <a href="admin-events.html" class="nav-item" data-section="admin-events"><span class="nav-icon"><i
+                            data-lucide="calendar-check"></i></span><span class="nav-label">Events Mgmt</span></a>
+                <a href="admin-lost.html" class="nav-item active" data-section="admin-lost"><span class="nav-icon"><i
+                            data-lucide="package-search"></i></span><span class="nav-label">Lost Items</span></a>
+                <a href="admin-found.html" class="nav-item" data-section="admin-found"><span class="nav-icon"><i
+                            data-lucide="package-check"></i></span><span class="nav-label">Found Items</span></a>
+                <a href="admin-users.html" class="nav-item" data-section="admin-users"><span class="nav-icon"><i
+                            data-lucide="users"></i></span><span class="nav-label">Users</span></a>
+            </div>
+            <div class="nav-spacer"></div>
+            <a href="#" onclick="handleLogout(); return false;" class="nav-item nav-logout"><span class="nav-icon"><i
+                        data-lucide="log-out"></i></span><span class="nav-label">Logout</span></a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div class="top-bar">
+            <button class="hamburger-btn" onclick="toggleMobileSidebar()"><i data-lucide="menu"></i></button>
+            <div class="search-bar"><i data-lucide="search"></i><input type="text" placeholder="Search..."
+                    id="global-search"></div>
+            <div class="top-bar-user"><img src="" alt="" class="top-bar-avatar" id="top-bar-avatar"><span
+                    id="user-name">Admin</span></div>
+        </div>
+
+        <div class="page-content">
+            <div class="section-header">
+                <h2>Lost Items Management</h2>
+                <div class="section-actions">
+                    <button class="btn-secondary" onclick="downloadReport('lost-items')"><i data-lucide="file-text"></i>
+                        Generate Report</button>
+                </div>
+            </div>
+            <div class="data-table-wrapper">
+                <table class="data-table" id="admin-lost-table">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Date Lost</th>
+                            <th>Location</th>
+                            <th>Owner</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-lost-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+    <script src="script.js"></script>
+</body>
+
+</html>

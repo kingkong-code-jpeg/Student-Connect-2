@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICCT HUB - Student Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>if(localStorage.getItem('darkMode')==='true')document.documentElement.classList.add('dark-mode');</script>
+</head>
+
+<body>
+    <!-- Landing Page -->
+    <div id="landing-page" class="page active">
+        <!-- Navigation -->
+        <nav class="navbar navbar-dark">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <img src="Assets/Logo.png" alt="ICCT HUB Logo" class="logo-img">
+                    <span class="logo-text">ICCT HUB</span>
+                </div>
+                <div class="nav-links" id="landing-nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#about">About</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="nav-buttons">
+                    <button onclick="openModal('login-modal')" class="btn-outline">Login</button>
+                    <button onclick="openModal('register-modal')" class="btn-gold">Register</button>
+                    <button class="nav-mobile-toggle" onclick="document.getElementById('landing-nav-links').classList.toggle('mobile-open')"><i data-lucide="menu"></i></button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero hero-dark">
+            <div class="hero-content">
+                <h1>Welcome to <span class="highlight-gold">ICCT HUB</span></h1>
+                <p class="hero-subtitle">Your Complete Student Portal for Academic Success</p>
+                <p class="hero-description">
+                    Connect with classmates, stay updated with announcements,
+                    manage your academic life, and never miss important events.
+                </p>
+                <div class="hero-buttons">
+                    <button onclick="openModal('register-modal')" class="btn-gold btn-large">Get Started</button>
+                    <a href="#features" class="btn-outline btn-large">Learn More</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="Assets/Book.gif" alt="ICCT HUB" class="hero-logo">
+            </div>
+        </section>
+
+        <!-- Important Events Section -->
+        <section id="events" class="events section-light">
+            <h2 class="section-title">Important Events</h2>
+            <div class="events-grid" id="landing-events-grid">
+                <div class="empty-state"><p>Loading events...</p></div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features section-navy">
+            <h2 class="section-title section-title-light">What We Offer</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i data-lucide="megaphone"></i></div>
+                    <h3>Announcements</h3>
+                    <p>Stay informed with real-time updates from your school administration and faculty.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i data-lucide="mail"></i></div>
+                    <h3>Student Inbox</h3>
+                    <p>Communicate directly with teachers and classmates through our secure messaging system.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i data-lucide="search"></i></div>
+                    <h3>Lost & Found</h3>
+                    <p>Report and find lost items within the campus community easily.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i data-lucide="calendar-days"></i></div>
+                    <h3>Events Calendar</h3>
+                    <p>Never miss school events, deadlines, and important academic dates.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about section-light">
+            <div class="about-content" style="text-align: center;">
+                <h2 class="section-title">About ICCT HUB</h2>
+                <p>
+                    ICCT HUB is a comprehensive student portal designed to enhance the academic
+                    experience of ICCT Colleges students. Our platform bridges the gap between
+                    students, faculty, and administration, creating a connected campus community.
+                </p>
+                <ul class="about-list" style="text-align: left; max-width: 600px; margin: 16px auto 0;">
+                    <li><i data-lucide="check" class="inline-icon"></i> Easy access to academic resources</li>
+                    <li><i data-lucide="check" class="inline-icon"></i> Real-time notifications and updates</li>
+                    <li><i data-lucide="check" class="inline-icon"></i> Secure and user-friendly interface</li>
+                    <li><i data-lucide="check" class="inline-icon"></i> 24/7 accessibility from any device</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact section-slate">
+            <h2 class="section-title section-title-light">Get In Touch</h2>
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="contact-icon"><i data-lucide="map-pin"></i></span>
+                        <p>ICCT Colleges - Antipolo Campus</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon"><i data-lucide="phone"></i></span>
+                        <p>+63 123 456 7890</p>
+                    </div>
+                </div>
+                <div class="map-container">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3489.2242329479263!2d121.16965490000001!3d14.5834522!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b8aaa2a67be9%3A0xfc1aa4217b71bb46!2sICCT%20-%20Antipolo%20Campus!5e1!3m2!1sen!2sph!4v1770560041806!5m2!1sen!2sph"
+                        width="500" height="350" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer footer-dark">
+            <p>&copy; 2026 ICCT HUB. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Landing Event Detail Modal -->
+    <div id="landing-event-modal" class="modal">
+        <div class="modal-overlay" onclick="closeModal('landing-event-modal')"></div>
+        <div class="modal-dialog modal-lg">
+            <button class="modal-close" onclick="closeModal('landing-event-modal')">&times;</button>
+            <div class="modal-content">
+                <div id="landing-event-detail"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-overlay" onclick="closeModal('login-modal')"></div>
+        <div class="modal-dialog modal-compact">
+            <button class="modal-close" onclick="closeModal('login-modal')">&times;</button>
+            <div class="modal-content">
+            <div class="modal-header">
+                <img src="Assets/Logo.png" alt="ICCT HUB" class="modal-logo">
+                <h2>Welcome Back</h2>
+                <p>Sign in to access your student Hub</p>
+            </div>
+            <form onsubmit="handleLogin(event)" class="auth-form">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="login-name" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label>Student ID</label>
+                    <input type="text" id="login-student-id" placeholder="Enter your student ID" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="login-email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="login-password" placeholder="Enter your password" required>
+                </div>
+                <a href="#" class="forgot-password">Forgot password?</a>
+                <button type="submit" class="btn-submit">Login</button>
+                <p class="auth-switch">
+                    New Student? <a href="#"
+                        onclick="switchModal('login-modal', 'register-modal'); return false;">Register now</a>
+                </p>
+                <p class="auth-switch" style="margin-top: 8px; font-size: 0.85rem;">
+                    <a href="#" onclick="switchModal('login-modal', 'admin-login-modal'); return false;">Admin Login</a>
+                </p>
+            </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="register-modal" class="modal">
+        <div class="modal-overlay" onclick="closeModal('register-modal')"></div>
+        <div class="modal-dialog modal-compact">
+            <button class="modal-close" onclick="closeModal('register-modal')">&times;</button>
+            <div class="modal-content">
+            <div class="modal-header">
+                <img src="Assets/Logo.png" alt="ICCT HUB" class="modal-logo">
+                <h2>Create Account</h2>
+                <p>Join the ICCT HUB community</p>
+            </div>
+            <form onsubmit="handleRegister(event)" class="auth-form">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="register-name" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label>Student ID</label>
+                    <input type="text" id="register-student-id" placeholder="Enter your student ID" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="register-email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="register-password" placeholder="Create a password" required>
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" id="register-confirm-password" placeholder="Confirm your password" required>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms">I agree to the Terms of Service and Privacy Policy</label>
+                </div>
+                <button type="submit" class="btn-submit">Sign Up</button>
+                <p class="auth-switch">
+                    Have an account? <a href="#"
+                        onclick="switchModal('register-modal', 'login-modal'); return false;">Login</a>
+                </p>
+            </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div id="admin-login-modal" class="modal">
+        <div class="modal-overlay" onclick="closeModal('admin-login-modal')"></div>
+        <div class="modal-dialog modal-compact">
+            <button class="modal-close" onclick="closeModal('admin-login-modal')">&times;</button>
+            <div class="modal-content">
+            <div class="modal-header">
+                <img src="Assets/Logo.png" alt="ICCT HUB" class="modal-logo">
+                <h2>Admin Portal</h2>
+                <p>Sign in with your administrator credentials</p>
+            </div>
+            <form onsubmit="handleAdminLogin(event)" class="auth-form">
+                <div class="form-group">
+                    <label>Admin Email or ID</label>
+                    <input type="text" id="admin-login-email" placeholder="Enter admin email or ID" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="admin-login-password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn-submit">Admin Login</button>
+                <p class="auth-switch">
+                    <a href="#" onclick="switchModal('admin-login-modal', 'login-modal'); return false;">Back to Student Login</a>
+                </p>
+            </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div id="dashboard-page" class="page">
+        <!-- Mobile Sidebar Overlay -->
+        <div class="sidebar-overlay" onclick="toggleMobileSidebar()"></div>
+
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <img src="Assets/Logo.png" alt="ICCT HUB" class="sidebar-logo">
+                <h1 class="sidebar-title">ICCT HUB</h1>
+                <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar" id="sidebar-toggle-btn">
+                    <i data-lucide="chevrons-left" id="sidebar-toggle-icon"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" onclick="showDashboardSection('dashboard'); return false;" class="nav-item active">
+                    <span class="nav-icon"><i data-lucide="layout-dashboard"></i></span>
+                    <span class="nav-label">Dashboard</span>
+                </a>
+                <a href="#" onclick="showDashboardSection('inbox'); return false;" class="nav-item">
+                    <span class="nav-icon"><i data-lucide="mail"></i></span>
+                    <span class="nav-label">Inbox</span>
+                </a>
+                <a href="#" onclick="showDashboardSection('lost-found'); return false;" class="nav-item">
+                    <span class="nav-icon"><i data-lucide="search"></i></span>
+                    <span class="nav-label">Lost and Found</span>
+                </a>
+                <a href="#" onclick="showDashboardSection('announcements'); return false;" class="nav-item">
+                    <span class="nav-icon"><i data-lucide="megaphone"></i></span>
+                    <span class="nav-label">Announcements</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#" class="nav-item">
+                    <span class="nav-icon"><i data-lucide="help-circle"></i></span>
+                    <span class="nav-label">FAQs</span>
+                </a>
+                <a href="#" onclick="handleLogout(); return false;" class="nav-item">
+                    <span class="nav-icon"><i data-lucide="log-out"></i></span>
+                    <span class="nav-label">Log Out</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="top-bar">
+                <button class="hamburger-btn" onclick="toggleMobileSidebar()" title="Open menu">
+                    <i data-lucide="menu"></i>
+                </button>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search...">
+                    <button class="search-btn"><i data-lucide="search"></i></button>
+                </div>
+                <div class="user-info">
+                    <span>Hi, <span id="user-name">Student</span></span>
+                </div>
+                <button class="btn-add"><i data-lucide="plus"></i></button>
+            </div>
+
+            <!-- Dashboard Section -->
+            <div id="dashboard-section" class="content-section active">
+                <div class="content-card">
+                    <div class="card-header">
+                        <i data-lucide="home" class="card-header-icon"></i>
+                        <h3>Welcome</h3>
+                    </div>
+                    <div class="card-body">
+                        <h2 class="welcome-heading">Hello, <span id="dashboard-user-name">[Student Name]</span>!</h2>
+                        <p class="welcome-text">Get ready for an exciting day!</p>
+                        <p class="event-info">
+                            Don't miss our upcoming event: <strong>[Event Name]</strong>.
+                            Check out the schedule, location, and activities in your portal.
+                        </p>
+                        <p>Join your classmates, participate in fun activities, and make the most of this experience!
+                        </p>
+                        <p class="see-you">See you there!</p>
+                        <p class="admin-signature">Admin</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inbox Section -->
+            <div id="inbox-section" class="content-section">
+                <div class="content-card">
+                    <div class="card-header">
+                        <i data-lucide="mail" class="card-header-icon"></i>
+                        <h3>Inbox</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="inbox-container" id="inbox-list">
+                            <p class="text-muted">No messages yet.</p>
+                        </div>
+                        <div id="email-viewer" class="email-viewer" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lost and Found Section -->
+            <div id="lost-found-section" class="content-section">
+                <div class="content-card">
+                    <div class="card-header">
+                        <i data-lucide="search" class="card-header-icon"></i>
+                        <h3>Lost and Found</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="tabs">
+                            <button class="tab active" onclick="switchTab('all')">All</button>
+                            <button class="tab" onclick="switchTab('lost')">Lost</button>
+                            <button class="tab" onclick="switchTab('found')">Found</button>
+                        </div>
+                        <div class="lost-found-items" id="lost-found-list">
+                            <p class="text-muted">No items reported yet.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Announcements Section -->
+            <div id="announcements-section" class="content-section">
+                <div class="content-card">
+                    <div class="card-header">
+                        <i data-lucide="megaphone" class="card-header-icon"></i>
+                        <h3>Announcements</h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="announcements-list">
+                            <p class="text-muted">No announcements at this time.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+    <script src="script.js"></script>
+</body>
+
+</html>

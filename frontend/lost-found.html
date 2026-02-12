@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lost & Found — ICCT HUB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>if(localStorage.getItem('darkMode')==='true')document.documentElement.classList.add('dark-mode');</script>
+</head>
+
+<body class="dashboard-layout" data-page="lost-found">
+
+    <div class="sidebar-overlay" onclick="closeMobileSidebar()"></div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="Assets/Logo.png" alt="ICCT HUB" class="sidebar-logo">
+            <h1 class="sidebar-title">ICCT HUB</h1>
+            <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar">
+                <i data-lucide="chevrons-left" id="sidebar-toggle-icon"></i>
+            </button>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-group-label">MAIN</div>
+            <a href="dashboard.html" class="nav-item" data-section="dashboard">
+                <span class="nav-icon"><i data-lucide="layout-dashboard"></i></span>
+                <span class="nav-label">Dashboard</span>
+            </a>
+            <a href="inbox.html" class="nav-item" data-section="inbox">
+                <span class="nav-icon"><i data-lucide="mail"></i></span>
+                <span class="nav-label">Inbox</span>
+            </a>
+            <a href="lost-found.html" class="nav-item active" data-section="lost-found">
+                <span class="nav-icon"><i data-lucide="search"></i></span>
+                <span class="nav-label">Lost & Found</span>
+            </a>
+            <a href="announcements.html" class="nav-item" data-section="announcements">
+                <span class="nav-icon"><i data-lucide="megaphone"></i></span>
+                <span class="nav-label">Announcements</span>
+            </a>
+            <div class="nav-group-label">ACCOUNT</div>
+            <a href="profile.html" class="nav-item" data-section="profile">
+                <span class="nav-icon"><i data-lucide="user"></i></span>
+                <span class="nav-label">Profile</span>
+            </a>
+            <a href="settings.html" class="nav-item" data-section="settings">
+                <span class="nav-icon"><i data-lucide="settings"></i></span>
+                <span class="nav-label">Settings</span>
+            </a>
+            <div id="admin-nav" class="admin-nav-group" style="display:none;">
+                <div class="nav-group-label">ADMIN</div>
+                <a href="admin-events.html" class="nav-item" data-section="admin-events">
+                    <span class="nav-icon"><i data-lucide="calendar-check"></i></span>
+                    <span class="nav-label">Events Mgmt</span>
+                </a>
+                <a href="admin-lost.html" class="nav-item" data-section="admin-lost">
+                    <span class="nav-icon"><i data-lucide="package-search"></i></span>
+                    <span class="nav-label">Lost Items</span>
+                </a>
+                <a href="admin-found.html" class="nav-item" data-section="admin-found">
+                    <span class="nav-icon"><i data-lucide="package-check"></i></span>
+                    <span class="nav-label">Found Items</span>
+                </a>
+                <a href="admin-users.html" class="nav-item" data-section="admin-users">
+                    <span class="nav-icon"><i data-lucide="users"></i></span>
+                    <span class="nav-label">Users</span>
+                </a>
+            </div>
+            <div class="nav-spacer"></div>
+            <a href="#" onclick="handleLogout(); return false;" class="nav-item nav-logout">
+                <span class="nav-icon"><i data-lucide="log-out"></i></span>
+                <span class="nav-label">Logout</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="top-bar">
+            <button class="hamburger-btn" onclick="toggleMobileSidebar()"><i data-lucide="menu"></i></button>
+            <div class="search-bar">
+                <i data-lucide="search"></i>
+                <input type="text" placeholder="Search..." id="global-search">
+            </div>
+            <div class="top-bar-user">
+                <img src="" alt="" class="top-bar-avatar" id="top-bar-avatar">
+                <span id="user-name">Student</span>
+            </div>
+        </div>
+
+        <div class="page-content">
+            <div class="section-header">
+                <h2>Lost & Found</h2>
+            </div>
+
+            <div class="filter-bar">
+                <div class="tab-group">
+                    <button class="tab active" onclick="switchLostFoundTab('lost', this)">Lost Items</button>
+                    <button class="tab" onclick="switchLostFoundTab('found', this)">Found Items</button>
+                </div>
+                <select id="lf-category-filter" onchange="filterLostFound()">
+                    <option value="">All Categories</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Clothing">Clothing</option>
+                    <option value="ID">ID</option>
+                    <option value="Accessories">Accessories</option>
+                    <option value="Books">Books</option>
+                    <option value="Bags">Bags</option>
+                    <option value="Keys">Keys</option>
+                    <option value="Documents">Documents</option>
+                    <option value="Wallets">Wallets</option>
+                    <option value="Sports Equipment">Sports Equipment</option>
+                    <option value="Other">Other</option>
+                </select>
+                <select id="lf-status-filter" onchange="filterLostFound()">
+                    <option value="">All Status</option>
+                    <option value="Lost">Lost</option>
+                    <option value="Found">Found</option>
+                    <option value="Archived">Archived</option>
+                </select>
+                <button class="btn-primary" id="lf-post-btn" onclick="openLostFoundModal()">
+                    <i data-lucide="plus"></i> Report Item
+                </button>
+            </div>
+
+            <div class="items-grid" id="lost-found-grid">
+                <div class="empty-state"><i data-lucide="search-x"></i>
+                    <p>No items to display</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lost/Found Item Modal -->
+    <div id="lf-form-modal" class="modal">
+        <div class="modal-overlay" onclick="closeModal('lf-form-modal')"></div>
+        <div class="modal-dialog modal-form">
+            <button class="modal-close" onclick="closeModal('lf-form-modal')">&times;</button>
+            <div class="modal-content">
+            <h2 id="lf-modal-title"><i data-lucide="search" class="modal-title-icon"></i> Report Item</h2>
+            <form onsubmit="submitLostFoundItem(event)">
+                <input type="hidden" id="lf-item-id">
+                <input type="hidden" id="lf-item-type" value="lost">
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="lf-description" rows="3" required placeholder="Describe the item..."></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="lf-category" required>
+                            <option value="Electronics">Electronics</option>
+                            <option value="Clothing">Clothing</option>
+                            <option value="ID">ID</option>
+                            <option value="Accessories">Accessories</option>
+                            <option value="Books">Books</option>
+                            <option value="Bags">Bags</option>
+                            <option value="Keys">Keys</option>
+                            <option value="Documents">Documents</option>
+                            <option value="Wallets">Wallets</option>
+                            <option value="Sports Equipment">Sports Equipment</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label id="lf-date-label">Date Lost</label>
+                        <input type="datetime-local" id="lf-date" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label id="lf-location-label">Location Lost</label>
+                    <input type="text" id="lf-location" placeholder="Where was it lost/found?">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label id="lf-name-label">Owner Name</label>
+                        <input type="text" id="lf-contact-name" placeholder="Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Contact Info</label>
+                        <input type="text" id="lf-contact-info" placeholder="Email or phone">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Images (up to 5)</label>
+                    <input type="file" id="lf-images" accept="image/*" multiple class="file-input">
+                </div>
+                <button type="submit" class="btn-primary btn-full">Submit Report</button>
+            </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Item Detail Modal -->
+    <div id="item-detail-modal" class="modal">
+        <div class="modal-overlay" onclick="closeModal('item-detail-modal')"></div>
+        <div class="modal-dialog modal-form modal-lg">
+            <button class="modal-close" onclick="closeModal('item-detail-modal')">&times;</button>
+            <div class="modal-content">
+                <div id="item-detail-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+    <script src="script.js"></script>
+</body>
+
+</html>
