@@ -36,11 +36,30 @@ exports.getLostItemById = async (req, res) => {
 // POST /api/lost-items
 exports.createLostItem = async (req, res) => {
     try {
+        console.log('📝 Received request body:', req.body);
+        console.log('📎 Files received:', req.files ? req.files.length : 0);
+        
         const { description, dateLost, locationLost, category, ownerName, ownerContact } = req.body;
 
         let images = [];
         if (req.files && req.files.length > 0) {
-            images = await uploadMultipleToCloudinary(req.files, 'iccthub/lost');
+            console.log('☁️ Starting Cloudinary upload...');
+            try {
+                images = await uploadMultipleToCloudinary(req.files, 'iccthub/lost');
+                console.log('✅ Upload successful:', images);
+            } catch (uploadError) {
+                console.error('❌ Cloudinary upload failed:', uploadError);
+                console.error('Error details:', {
+                    message: uploadError.message,
+                    name: uploadError.name,
+                    http_code: uploadError.http_code,
+                    error: uploadError.error
+                });
+                return res.status(500).json({ 
+                    message: 'Image upload failed', 
+                    error: uploadError.message 
+                });
+            }
         }
 
         const item = await LostItem.create({
@@ -57,6 +76,7 @@ exports.createLostItem = async (req, res) => {
         await item.populate('postedBy', 'name email');
         res.status(201).json(item);
     } catch (error) {
+        console.error('❌ Controller error:', error);
         res.status(500).json({ message: error.message });
     }
 };
