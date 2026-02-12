@@ -1,6 +1,19 @@
 const Event = require('../models/Event');
 const { uploadMultipleToCloudinary } = require('../middleware/upload');
 
+// GET /api/events/public (no auth required - for landing page)
+exports.getPublicEvents = async (req, res) => {
+    try {
+        const events = await Event.find({ isArchived: false, status: { $in: ['Upcoming', 'Ongoing'] } })
+            .select('title content eventDate location status images')
+            .sort({ eventDate: 1 })
+            .limit(6);
+        res.json(events);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 // GET /api/events
 exports.getEvents = async (req, res) => {
     try {

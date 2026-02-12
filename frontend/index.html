@@ -22,7 +22,7 @@
                     <img src="Assets/Logo.png" alt="ICCT HUB Logo" class="logo-img">
                     <span class="logo-text">ICCT HUB</span>
                 </div>
-                <div class="nav-links">
+                <div class="nav-links" id="landing-nav-links">
                     <a href="#features">Features</a>
                     <a href="#about">About</a>
                     <a href="#contact">Contact</a>
@@ -30,6 +30,7 @@
                 <div class="nav-buttons">
                     <button onclick="openModal('login-modal')" class="btn-outline">Login</button>
                     <button onclick="openModal('register-modal')" class="btn-gold">Register</button>
+                    <button class="nav-mobile-toggle" onclick="document.getElementById('landing-nav-links').classList.toggle('mobile-open')"><i data-lucide="menu"></i></button>
                 </div>
             </div>
         </nav>
@@ -56,61 +57,8 @@
         <!-- Important Events Section -->
         <section id="events" class="events section-light">
             <h2 class="section-title">Important Events</h2>
-            <div class="events-grid">
-                <div class="event-card">
-                    <div class="event-image">
-                        <img src="Assets/Logo.png" alt="Enrollment">
-                    </div>
-                    <div class="event-content">
-                        <div class="event-date">
-                            <span class="day">15</span>
-                            <span class="month">FEB</span>
-                        </div>
-                        <div class="event-details">
-                            <h3>Enrollment Period Opens</h3>
-                            <p>Second Semester 2026 enrollment begins for all students.</p>
-                            <span class="event-time"><i data-lucide="map-pin" class="inline-icon"></i> Registrar
-                                Office</span>
-                            <button class="btn-event">View Details</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="event-card">
-                    <div class="event-image">
-                        <img src="Assets/Logo.png" alt="Foundation Day">
-                    </div>
-                    <div class="event-content">
-                        <div class="event-date">
-                            <span class="day">20</span>
-                            <span class="month">FEB</span>
-                        </div>
-                        <div class="event-details">
-                            <h3>Foundation Day Celebration</h3>
-                            <p>Join us for the annual ICCT Foundation Day activities and programs.</p>
-                            <span class="event-time"><i data-lucide="map-pin" class="inline-icon"></i> Main Campus
-                                Grounds</span>
-                            <button class="btn-event">View Details</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="event-card">
-                    <div class="event-image">
-                        <img src="Assets/Logo.png" alt="Career Fair">
-                    </div>
-                    <div class="event-content">
-                        <div class="event-date">
-                            <span class="day">28</span>
-                            <span class="month">FEB</span>
-                        </div>
-                        <div class="event-details">
-                            <h3>Career Fair 2026</h3>
-                            <p>Meet potential employers and explore career opportunities.</p>
-                            <span class="event-time"><i data-lucide="map-pin" class="inline-icon"></i> Student Activity
-                                Center</span>
-                            <button class="btn-event">View Details</button>
-                        </div>
-                    </div>
-                </div>
+            <div class="events-grid" id="landing-events-grid">
+                <div class="empty-state"><p>Loading events...</p></div>
             </div>
         </section>
 
@@ -186,6 +134,17 @@
         <footer class="footer footer-dark">
             <p>&copy; 2026 ICCT HUB. All rights reserved.</p>
         </footer>
+    </div>
+
+    <!-- Landing Event Detail Modal -->
+    <div id="landing-event-modal" class="modal">
+        <div class="modal-overlay" onclick="closeModal('landing-event-modal')"></div>
+        <div class="modal-dialog modal-lg">
+            <button class="modal-close" onclick="closeModal('landing-event-modal')">&times;</button>
+            <div class="modal-content">
+                <div id="landing-event-detail"></div>
+            </div>
+        </div>
     </div>
 
     <!-- Login Modal -->

@@ -1332,6 +1332,78 @@ async function downloadReport(type) {
     } catch (err) { showToast(err.message || 'Report failed', 'error'); }
 }
 
+// ───────────── Landing Page Events ─────────────
+let landingEventsData = [];
+
+async function loadLandingEvents() {
+    const grid = document.getElementById('landing-events-grid');
+    if (!grid) return;
+    try {
+        const res = await fetch(`${API_BASE}/events/public`);
+        const events = await res.json();
+        if (!res.ok) throw new Error('Failed to fetch events');
+        landingEventsData = events;
+        if (!events.length) {
+            grid.innerHTML = '<div class="empty-state"><i data-lucide="calendar-off"></i><p>No upcoming events</p></div>';
+            initIcons();
+            return;
+        }
+        grid.innerHTML = events.map((e, i) => {
+            const d = new Date(e.eventDate);
+            const day = d.getDate();
+            const month = d.toLocaleString('en-US', { month: 'short' }).toUpperCase();
+            const time = d.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+            const img = e.images && e.images.length
+                ? `<img src="${e.images[0]}" alt="${e.title}" style="width:100%;height:100%;object-fit:cover;opacity:1">`
+                : `<img src="Assets/Logo.png" alt="Event">`;
+            return `<div class="event-card" style="cursor:pointer" onclick="viewLandingEvent(${i})">
+                <div class="event-image">${img}</div>
+                <div class="event-content">
+                    <div class="event-date"><span class="day">${day}</span><span class="month">${month}</span></div>
+                    <div class="event-details">
+                        <h3>${e.title}</h3>
+                        <p>${e.content ? e.content.substring(0, 80) + (e.content.length > 80 ? '...' : '') : ''}</p>
+                        <div class="event-time"><i data-lucide="map-pin" style="width:14px;height:14px"></i> ${e.location || 'TBA'}</div>
+                        <button class="btn-event" onclick="event.stopPropagation();viewLandingEvent(${i})">View Details</button>
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
+        initIcons();
+    } catch (err) {
+        console.error('Landing events error:', err);
+        grid.innerHTML = '<div class="empty-state"><i data-lucide="alert-circle"></i><p>Could not load events</p></div>';
+        initIcons();
+    }
+}
+
+function viewLandingEvent(index) {
+    const e = landingEventsData[index];
+    if (!e) return;
+    const d = new Date(e.eventDate);
+    const dateStr = d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+    const timeStr = d.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+    const gallery = e.images && e.images.length
+        ? `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:20px">
+            ${e.images.map(img => `<img src="${img}" alt="${e.title}" style="width:100%;border-radius:8px;cursor:pointer;max-height:220px;object-fit:cover" onclick="window.open('${img}','_blank')">`).join('')}
+           </div>` : '';
+    const detail = document.getElementById('landing-event-detail');
+    detail.innerHTML = `
+        <div class="modal-header"><h2>${e.title}</h2></div>
+        <div class="modal-body" style="padding:20px">
+            ${gallery}
+            <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px">
+                <span class="badge badge-blue" style="font-size:.85rem;padding:6px 14px"><i data-lucide="calendar" style="width:14px;height:14px;margin-right:4px"></i>${dateStr}</span>
+                <span class="badge badge-purple" style="font-size:.85rem;padding:6px 14px"><i data-lucide="clock" style="width:14px;height:14px;margin-right:4px"></i>${timeStr}</span>
+                <span class="badge badge-green" style="font-size:.85rem;padding:6px 14px"><i data-lucide="map-pin" style="width:14px;height:14px;margin-right:4px"></i>${e.location || 'TBA'}</span>
+                <span class="badge badge-${e.status === 'Ongoing' ? 'yellow' : 'blue'}" style="font-size:.85rem;padding:6px 14px">${e.status}</span>
+            </div>
+            <div style="color:var(--text);line-height:1.7;white-space:pre-wrap">${e.content || ''}</div>
+        </div>`;
+    initIcons();
+    openModal('landing-event-modal');
+}
+
 // ───────────── DOMContentLoaded ─────────────
 document.addEventListener('DOMContentLoaded', async () => {
     initIcons();
@@ -1386,4 +1458,5 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
     // Otherwise, landing page is already visible
+    loadLandingEvents();
 });
