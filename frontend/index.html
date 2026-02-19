@@ -9,41 +9,43 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script>if(localStorage.getItem('darkMode')==='true')document.documentElement.classList.add('dark-mode');</script>
 </head>
 
 <body>
     <!-- Landing Page -->
     <div id="landing-page" class="page active">
         <!-- Navigation -->
-        <nav class="navbar">
+        <nav class="navbar navbar-dark">
             <div class="nav-container">
                 <div class="nav-logo">
                     <img src="Assets/Logo.png" alt="ICCT HUB Logo" class="logo-img">
                     <span class="logo-text">ICCT HUB</span>
                 </div>
-                <div class="nav-links">
+                <div class="nav-links" id="landing-nav-links">
                     <a href="#features">Features</a>
                     <a href="#about">About</a>
                     <a href="#contact">Contact</a>
                 </div>
                 <div class="nav-buttons">
                     <button onclick="openModal('login-modal')" class="btn-outline">Login</button>
-                    <button onclick="openModal('register-modal')" class="btn-primary">Register</button>
+                    <button onclick="openModal('register-modal')" class="btn-gold">Register</button>
+                    <button class="nav-mobile-toggle" onclick="document.getElementById('landing-nav-links').classList.toggle('mobile-open')"><i data-lucide="menu"></i></button>
                 </div>
             </div>
         </nav>
 
         <!-- Hero Section -->
-        <section class="hero">
+        <section class="hero hero-dark">
             <div class="hero-content">
-                <h1>Welcome to <span class="highlight">ICCT HUB</span></h1>
+                <h1>Welcome to <span class="highlight-gold">ICCT HUB</span></h1>
                 <p class="hero-subtitle">Your Complete Student Portal for Academic Success</p>
                 <p class="hero-description">
                     Connect with classmates, stay updated with announcements,
                     manage your academic life, and never miss important events.
                 </p>
                 <div class="hero-buttons">
-                    <button onclick="openModal('register-modal')" class="btn-primary btn-large">Get Started</button>
+                    <button onclick="openModal('register-modal')" class="btn-gold btn-large">Get Started</button>
                     <a href="#features" class="btn-outline btn-large">Learn More</a>
                 </div>
             </div>
@@ -53,69 +55,16 @@
         </section>
 
         <!-- Important Events Section -->
-        <section id="events" class="events">
+        <section id="events" class="events section-light">
             <h2 class="section-title">Important Events</h2>
-            <div class="events-grid">
-                <div class="event-card">
-                    <div class="event-image">
-                        <img src="Assets/Logo.png" alt="Enrollment">
-                    </div>
-                    <div class="event-content">
-                        <div class="event-date">
-                            <span class="day">15</span>
-                            <span class="month">FEB</span>
-                        </div>
-                        <div class="event-details">
-                            <h3>Enrollment Period Opens</h3>
-                            <p>Second Semester 2026 enrollment begins for all students.</p>
-                            <span class="event-time"><i data-lucide="map-pin" class="inline-icon"></i> Registrar
-                                Office</span>
-                            <button class="btn-event">View Details</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="event-card">
-                    <div class="event-image">
-                        <img src="Assets/Logo.png" alt="Foundation Day">
-                    </div>
-                    <div class="event-content">
-                        <div class="event-date">
-                            <span class="day">20</span>
-                            <span class="month">FEB</span>
-                        </div>
-                        <div class="event-details">
-                            <h3>Foundation Day Celebration</h3>
-                            <p>Join us for the annual ICCT Foundation Day activities and programs.</p>
-                            <span class="event-time"><i data-lucide="map-pin" class="inline-icon"></i> Main Campus
-                                Grounds</span>
-                            <button class="btn-event">View Details</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="event-card">
-                    <div class="event-image">
-                        <img src="Assets/Logo.png" alt="Career Fair">
-                    </div>
-                    <div class="event-content">
-                        <div class="event-date">
-                            <span class="day">28</span>
-                            <span class="month">FEB</span>
-                        </div>
-                        <div class="event-details">
-                            <h3>Career Fair 2026</h3>
-                            <p>Meet potential employers and explore career opportunities.</p>
-                            <span class="event-time"><i data-lucide="map-pin" class="inline-icon"></i> Student Activity
-                                Center</span>
-                            <button class="btn-event">View Details</button>
-                        </div>
-                    </div>
-                </div>
+            <div class="events-grid" id="landing-events-grid">
+                <div class="empty-state"><p>Loading events...</p></div>
             </div>
         </section>
 
         <!-- Features Section -->
-        <section id="features" class="features">
-            <h2 class="section-title">What We Offer</h2>
+        <section id="features" class="features section-navy">
+            <h2 class="section-title section-title-light">What We Offer</h2>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon"><i data-lucide="megaphone"></i></div>
@@ -141,15 +90,15 @@
         </section>
 
         <!-- About Section -->
-        <section id="about" class="about">
-            <div class="about-content">
+        <section id="about" class="about section-light">
+            <div class="about-content" style="text-align: center;">
                 <h2 class="section-title">About ICCT HUB</h2>
                 <p>
                     ICCT HUB is a comprehensive student portal designed to enhance the academic
                     experience of ICCT Colleges students. Our platform bridges the gap between
                     students, faculty, and administration, creating a connected campus community.
                 </p>
-                <ul class="about-list">
+                <ul class="about-list" style="text-align: left; max-width: 600px; margin: 16px auto 0;">
                     <li><i data-lucide="check" class="inline-icon"></i> Easy access to academic resources</li>
                     <li><i data-lucide="check" class="inline-icon"></i> Real-time notifications and updates</li>
                     <li><i data-lucide="check" class="inline-icon"></i> Secure and user-friendly interface</li>
@@ -159,8 +108,8 @@
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="contact">
-            <h2 class="section-title">Get In Touch</h2>
+        <section id="contact" class="contact section-slate">
+            <h2 class="section-title section-title-light">Get In Touch</h2>
             <div class="contact-wrapper">
                 <div class="contact-info">
                     <div class="contact-item">
@@ -182,16 +131,28 @@
         </section>
 
         <!-- Footer -->
-        <footer class="footer">
+        <footer class="footer footer-dark">
             <p>&copy; 2026 ICCT HUB. All rights reserved.</p>
         </footer>
+    </div>
+
+    <!-- Landing Event Detail Modal -->
+    <div id="landing-event-modal" class="modal">
+        <div class="modal-overlay" onclick="closeModal('landing-event-modal')"></div>
+        <div class="modal-dialog modal-lg">
+            <button class="modal-close" onclick="closeModal('landing-event-modal')">&times;</button>
+            <div class="modal-content">
+                <div id="landing-event-detail"></div>
+            </div>
+        </div>
     </div>
 
     <!-- Login Modal -->
     <div id="login-modal" class="modal">
         <div class="modal-overlay" onclick="closeModal('login-modal')"></div>
-        <div class="modal-content modal-compact">
+        <div class="modal-dialog modal-compact">
             <button class="modal-close" onclick="closeModal('login-modal')">&times;</button>
+            <div class="modal-content">
             <div class="modal-header">
                 <img src="Assets/Logo.png" alt="ICCT HUB" class="modal-logo">
                 <h2>Welcome Back</h2>
@@ -220,15 +181,20 @@
                     New Student? <a href="#"
                         onclick="switchModal('login-modal', 'register-modal'); return false;">Register now</a>
                 </p>
+                <p class="auth-switch" style="margin-top: 8px; font-size: 0.85rem;">
+                    <a href="#" onclick="switchModal('login-modal', 'admin-login-modal'); return false;">Admin Login</a>
+                </p>
             </form>
+            </div>
         </div>
     </div>
 
     <!-- Register Modal -->
     <div id="register-modal" class="modal">
         <div class="modal-overlay" onclick="closeModal('register-modal')"></div>
-        <div class="modal-content modal-compact">
+        <div class="modal-dialog modal-compact">
             <button class="modal-close" onclick="closeModal('register-modal')">&times;</button>
+            <div class="modal-content">
             <div class="modal-header">
                 <img src="Assets/Logo.png" alt="ICCT HUB" class="modal-logo">
                 <h2>Create Account</h2>
@@ -265,6 +231,36 @@
                         onclick="switchModal('register-modal', 'login-modal'); return false;">Login</a>
                 </p>
             </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div id="admin-login-modal" class="modal">
+        <div class="modal-overlay" onclick="closeModal('admin-login-modal')"></div>
+        <div class="modal-dialog modal-compact">
+            <button class="modal-close" onclick="closeModal('admin-login-modal')">&times;</button>
+            <div class="modal-content">
+            <div class="modal-header">
+                <img src="Assets/Logo.png" alt="ICCT HUB" class="modal-logo">
+                <h2>Admin Portal</h2>
+                <p>Sign in with your administrator credentials</p>
+            </div>
+            <form onsubmit="handleAdminLogin(event)" class="auth-form">
+                <div class="form-group">
+                    <label>Admin Email or ID</label>
+                    <input type="text" id="admin-login-email" placeholder="Enter admin email or ID" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="admin-login-password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn-submit">Admin Login</button>
+                <p class="auth-switch">
+                    <a href="#" onclick="switchModal('admin-login-modal', 'login-modal'); return false;">Back to Student Login</a>
+                </p>
+            </form>
+            </div>
         </div>
     </div>
 
@@ -356,27 +352,10 @@
                         <h3>Inbox</h3>
                     </div>
                     <div class="card-body">
-                        <div class="inbox-container">
-                            <div class="email-item" onclick="openEmail(1)">
-                                <div class="email-preview">
-                                    <strong>From: carlfrancisco32@gmail.com</strong>
-                                    <p>Hi, Karla I read your concern about your missing item...</p>
-                                </div>
-                            </div>
+                        <div class="inbox-container" id="inbox-list">
+                            <p class="text-muted">No messages yet.</p>
                         </div>
-                        <div id="email-viewer" class="email-viewer" style="display: none;">
-                            <div class="email-header">
-                                <strong>To: carlfrancisco32@gmail.com</strong>
-                                <button onclick="closeEmail()" class="btn-close">&times;</button>
-                            </div>
-                            <div class="email-body">
-                                <p>Hi, Karla I read your concern about your missing item.</p>
-                            </div>
-                            <div class="email-actions">
-                                <button class="btn-action">Reply</button>
-                                <button class="btn-action btn-delete">Delete</button>
-                            </div>
-                        </div>
+                        <div id="email-viewer" class="email-viewer" style="display: none;"></div>
                     </div>
                 </div>
             </div>
@@ -391,22 +370,11 @@
                     <div class="card-body">
                         <div class="tabs">
                             <button class="tab active" onclick="switchTab('all')">All</button>
-                            <button class="tab" onclick="switchTab('pending')">Pendings</button>
-                            <button class="tab" onclick="switchTab('founded')">Founded</button>
+                            <button class="tab" onclick="switchTab('lost')">Lost</button>
+                            <button class="tab" onclick="switchTab('found')">Found</button>
                         </div>
-                        <div class="lost-found-items">
-                            <div class="lf-item lost-item">
-                                <div class="lf-badge">Lost Item</div>
-                                <p><strong>From: carlfrancisco32@gmail.com</strong></p>
-                                <p>Hi, meron po bang naka kita ng cellphone po na ito pwede po pa message nalang po ako
-                                    thank you.</p>
-                            </div>
-                            <div class="lf-item found-item">
-                                <div class="lf-badge found">Found Item</div>
-                                <p><strong>To: carlfrancisco32@gmail.com</strong></p>
-                                <p>HI, meron po akong nakitang I'd sa tapat ng school paki kuha nalang po sakin. Salamat
-                                </p>
-                            </div>
+                        <div class="lost-found-items" id="lost-found-list">
+                            <p class="text-muted">No items reported yet.</p>
                         </div>
                     </div>
                 </div>
@@ -420,18 +388,8 @@
                         <h3>Announcements</h3>
                     </div>
                     <div class="card-body">
-                        <div class="announcement-card">
-                            <h3>Good day, Students!</h3>
-                            <p>
-                                Please be informed that <strong>[insert announcement details here]</strong>.
-                                All students are expected to take note of this announcement and comply accordingly.
-                            </p>
-                            <p>
-                                For questions or clarifications, please contact <strong>[office/person]</strong>
-                                or visit <strong>[location/platform]</strong>.
-                            </p>
-                            <p>Thank you for your cooperation.</p>
-                            <p class="admin-signature">Admin</p>
+                        <div id="announcements-list">
+                            <p class="text-muted">No announcements at this time.</p>
                         </div>
                     </div>
                 </div>
@@ -439,6 +397,7 @@
         </div>
     </div>
 
+    <div id="toast-container"></div>
     <script src="script.js"></script>
 </body>
 
