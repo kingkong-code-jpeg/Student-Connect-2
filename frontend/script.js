@@ -464,7 +464,7 @@ async function viewMessage(id) {
         if (detail) {
             detail.innerHTML = `
                 <h3>${m.subject || '(No Subject)'}</h3>
-                <div class="meta">From: ${m.from?.name || 'Unknown'} · ${formatDate(m.createdAt)}</div>
+                <div class="meta"> From: ${m.from?.name || 'Unknown'} &lt; ${m.from?.email || 'Unknown'}&gt; · ${formatDate(m.createdAt)}</div>
                 <p>${m.body || ''}</p>`;
         }
     } catch (err) { showToast('Could not load message', 'error'); }

@@ -1,23 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inbox — ICCT HUB</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script>if(localStorage.getItem('darkMode')==='true')document.documentElement.classList.add('dark-mode');</script>
+
+    <!-- Dark Mode -->
+    <script>
+        if (localStorage.getItem("darkMode") === "true") {
+            document.documentElement.classList.add("dark-mode");
+        }
+    </script>
 </head>
 
 <body class="dashboard-layout" data-page="inbox">
 
     <div class="sidebar-overlay" onclick="closeMobileSidebar()"></div>
 
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <img src="Assets/Logo.png" alt="ICCT HUB" class="sidebar-logo">
             <h1 class="sidebar-title">ICCT HUB</h1>
@@ -25,79 +35,102 @@
                 <i data-lucide="chevrons-left" id="sidebar-toggle-icon"></i>
             </button>
         </div>
+
         <nav class="sidebar-nav">
             <div class="nav-group-label">MAIN</div>
+
             <a href="dashboard.html" class="nav-item" data-section="dashboard">
                 <span class="nav-icon"><i data-lucide="layout-dashboard"></i></span>
                 <span class="nav-label">Dashboard</span>
             </a>
+
             <a href="inbox.html" class="nav-item active" data-section="inbox">
                 <span class="nav-icon"><i data-lucide="mail"></i></span>
                 <span class="nav-label">Inbox</span>
             </a>
+
             <a href="lost-found.html" class="nav-item" data-section="lost-found">
                 <span class="nav-icon"><i data-lucide="search"></i></span>
                 <span class="nav-label">Lost & Found</span>
             </a>
+
             <a href="announcements.html" class="nav-item" data-section="announcements">
                 <span class="nav-icon"><i data-lucide="megaphone"></i></span>
                 <span class="nav-label">Announcements</span>
             </a>
+
             <div class="nav-group-label">ACCOUNT</div>
+
             <a href="profile.html" class="nav-item" data-section="profile">
                 <span class="nav-icon"><i data-lucide="user"></i></span>
                 <span class="nav-label">Profile</span>
             </a>
+
             <a href="settings.html" class="nav-item" data-section="settings">
                 <span class="nav-icon"><i data-lucide="settings"></i></span>
                 <span class="nav-label">Settings</span>
             </a>
-            <div id="admin-nav" class="admin-nav-group" style="display:none;">
+
+            <!-- Admin Section -->
+            <div id="admin-nav" class="admin-nav-group" style="display: none;">
                 <div class="nav-group-label">ADMIN</div>
+
                 <a href="admin-events.html" class="nav-item" data-section="admin-events">
                     <span class="nav-icon"><i data-lucide="calendar-check"></i></span>
                     <span class="nav-label">Events Mgmt</span>
                 </a>
+
                 <a href="admin-lost.html" class="nav-item" data-section="admin-lost">
                     <span class="nav-icon"><i data-lucide="package-search"></i></span>
                     <span class="nav-label">Lost Items</span>
                 </a>
+
                 <a href="admin-found.html" class="nav-item" data-section="admin-found">
                     <span class="nav-icon"><i data-lucide="package-check"></i></span>
                     <span class="nav-label">Found Items</span>
                 </a>
+
                 <a href="admin-users.html" class="nav-item" data-section="admin-users">
                     <span class="nav-icon"><i data-lucide="users"></i></span>
                     <span class="nav-label">Users</span>
                 </a>
             </div>
+
             <div class="nav-spacer"></div>
-            <a href="#" onclick="handleLogout(); return false;" class="nav-item nav-logout">
+
+            <a href="#" class="nav-item nav-logout" onclick="handleLogout(); return false;">
                 <span class="nav-icon"><i data-lucide="log-out"></i></span>
                 <span class="nav-label">Logout</span>
             </a>
         </nav>
-    </div>
+    </aside>
 
-    <!-- Main Content -->
-    <div class="main-content">
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="main-content">
+
+        <!-- Top Bar -->
         <div class="top-bar">
-            <button class="hamburger-btn" onclick="toggleMobileSidebar()"><i data-lucide="menu"></i></button>
+            <button class="hamburger-btn" onclick="toggleMobileSidebar()">
+                <i data-lucide="menu"></i>
+            </button>
+
             <div class="search-bar">
                 <i data-lucide="search"></i>
                 <input type="text" placeholder="Search..." id="global-search">
             </div>
+
             <div class="top-bar-user">
                 <img src="" alt="" class="top-bar-avatar" id="top-bar-avatar">
                 <span id="user-name">Student</span>
             </div>
         </div>
 
-        <div class="page-content">
+        <!-- Page Content -->
+        <section class="page-content">
             <div class="section-header">
                 <h2>Inbox</h2>
                 <button class="btn-primary" onclick="openModal('compose-modal')">
-                    <i data-lucide="plus"></i> Compose
+                    <i data-lucide="plus"></i> Send Inquiry
                 </button>
             </div>
 
@@ -107,6 +140,7 @@
                     <i data-lucide="search"></i>
                     <input type="text" placeholder="Search messages..." id="inbox-search" oninput="filterInbox()">
                 </div>
+
                 <select id="inbox-label-filter" onchange="filterInbox()">
                     <option value="">All Labels</option>
                     <option value="Important">Important</option>
@@ -114,6 +148,7 @@
                     <option value="Personal">Personal</option>
                     <option value="Urgent">Urgent</option>
                 </select>
+
                 <div class="tab-group">
                     <button class="tab active" onclick="switchInboxTab('inbox', this)">Inbox</button>
                     <button class="tab" onclick="switchInboxTab('sent', this)">Sent</button>
@@ -122,56 +157,86 @@
 
             <!-- Message List -->
             <div class="message-list" id="message-list">
-                <div class="empty-state"><i data-lucide="inbox"></i>
+                <div class="empty-state">
+                    <i data-lucide="inbox"></i>
                     <p>No messages yet</p>
                 </div>
             </div>
 
             <!-- Message Viewer -->
-            <div class="message-viewer" id="message-viewer" style="display:none;">
-                <button class="btn-back" onclick="closeMessageViewer()"><i data-lucide="arrow-left"></i> Back</button>
+            <div class="message-viewer" id="message-viewer" style="display: none;">
+                <button class="btn-back" onclick="closeMessageViewer()">
+                    <i data-lucide="arrow-left"></i> Back
+                </button>
                 <div class="message-detail" id="message-detail"></div>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
 
-    <!-- Compose Message Modal -->
+    <!-- ================= COMPOSE MODAL ================= -->
     <div id="compose-modal" class="modal">
         <div class="modal-overlay" onclick="closeModal('compose-modal')"></div>
+
         <div class="modal-dialog modal-form">
             <button class="modal-close" onclick="closeModal('compose-modal')">&times;</button>
+
             <div class="modal-content">
-            <h2><i data-lucide="send" class="modal-title-icon"></i> Compose Message</h2>
-            <form onsubmit="sendMessage(event)">
-                <div class="form-group">
-                    <label>To (Email or Student ID)</label>
-                    <input type="text" id="compose-to" required placeholder="recipient@email.com">
+                <h2>
+                    <i data-lucide="send" class="modal-title-icon"></i>
+                    Compose Message
+                </h2>
+
+                <form onsubmit="sendMessage(event)">
+                    <div class="form-group">
+                        <label for="compose-to">To (Email or Select Department)</label>
+                        <input
+                            type="email"
+                            id="compose-to"
+                            list="admin-emails"
+                            placeholder="Type email or select department..."
+                            class="form-control"
+                        >
+
+                        <datalist id="admin-emails">
+                            <option value="admin@iccthub.edu.ph">Main Administration</option>
+                        </datalist>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="compose-subject">Subject</label>
+                        <input type="text" id="compose-subject" placeholder="Message subject">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="compose-labels">Labels</label>
+                        <select id="compose-labels">
+                            <option value="Important">Important</option>
+                            <option value="Academic">Academic</option>
+                            <option value="Personal">Personal</option>
+                            <option value="Urgent">Urgent</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="compose-body">Inquire</label>
+                        <textarea id="compose-body" rows="5" required placeholder="Type your Inquiry..."></textarea>
+                    </div>
+                        <div class="form-group">
+                    <label>Images (up to 5)</label>
+                    <input type="file" id="lf-images" accept="image/*" multiple class="file-input">
                 </div>
-                <div class="form-group">
-                    <label>Subject</label>
-                    <input type="text" id="compose-subject" placeholder="Message subject">
-                </div>
-                <div class="form-group">
-                    <label>Labels</label>
-                    <select id="compose-labels" multiple>
-                        <option value="Important">Important</option>
-                        <option value="Academic">Academic</option>
-                        <option value="Personal">Personal</option>
-                        <option value="Urgent">Urgent</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Message</label>
-                    <textarea id="compose-body" rows="5" required placeholder="Type your message..."></textarea>
-                </div>
-                <button type="submit" class="btn-primary btn-full">Send Message</button>
-            </form>
+
+                    <button type="submit" class="btn-primary btn-full">
+                        Send Inquiry
+                    </button>
+                </form>
             </div>
         </div>
     </div>
 
     <div id="toast-container"></div>
+
+    <!-- Scripts -->
     <script src="script.js"></script>
 </body>
-
 </html>
